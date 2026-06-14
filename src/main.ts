@@ -13,7 +13,15 @@ async function bootstrap() {
   });
 
   //Payload Validation Pipe validation
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
+    }),
+  );
+
+  //Swagger
   const config = new DocumentBuilder()
     .setTitle('Cats example')
     .setDescription('The cats API description')

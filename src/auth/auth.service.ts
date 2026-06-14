@@ -9,7 +9,6 @@ import {
   Injectable,
   Logger,
   UnauthorizedException,
-  ConsoleLogger,
 } from '@nestjs/common';
 import { RegisterDto } from './dto/register.dto.js';
 import bcrypt from 'bcrypt';

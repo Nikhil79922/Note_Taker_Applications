@@ -6,6 +6,7 @@ import {
   Controller,
   Get,
   Param,
+  Patch,
   Post,
   Query,
   Request,
@@ -16,6 +17,8 @@ import type { Request as ExpressRequest } from 'express';
 import { RequestDto } from './Dto/request.dto.js';
 import { CreateTodoDto } from './Dto/createTodo.dto.js';
 import { GetNoteParamsDto, PaginationDto } from './Dto/getDetails.dto.js';
+import { UpdateNoteDto } from './Dto/update-note.dto.js';
+import { UpdateTodoDto } from './Dto/update-todo.dto.js';
 
 @Controller('api/note')
 export class NoteTakerController {
@@ -47,5 +50,25 @@ export class NoteTakerController {
   getNotes(@Query() query: PaginationDto, @Request() req: ExpressRequest) {
     const userDetails = req['user'] as RequestDto;
     return this.noteService.getNotes(query, userDetails);
+  }
+
+  @Patch('/updateNote/:id')
+  updateNote(
+    @Param() params: GetNoteParamsDto,
+    @Body() payload: UpdateNoteDto,
+    @Request() req: ExpressRequest,
+  ) {
+    const userDetails = req['user'] as RequestDto;
+    return this.noteService.updateNote(params.id, payload, userDetails);
+  }
+
+  @Patch('/updateTodo/:id')
+  updateTodo(
+    @Param() params: GetNoteParamsDto,
+    @Body() payload: UpdateTodoDto,
+    @Request() req: ExpressRequest,
+  ) {
+    const userDetails = req['user'] as RequestDto;
+    return this.noteService.updateTodo(params.id, payload, userDetails);
   }
 }

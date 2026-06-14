@@ -1,5 +1,7 @@
 import { Type } from 'class-transformer';
-import { IsInt, IsOptional, Min } from 'class-validator';
+import { IsIn, IsInt, IsOptional, IsString, Min } from 'class-validator';
+
+import { TODO_STATUS, type TodoStatus } from '../enums/todo-status.enum.js';
 
 export class GetNoteParamsDto {
   @Type(() => Number)
@@ -12,11 +14,27 @@ export class PaginationDto {
   @Type(() => Number)
   @IsInt()
   @Min(1)
-  page = 1;
+  page: number = 1;
 
   @IsOptional()
   @Type(() => Number)
   @IsInt()
   @Min(1)
-  limit = 10;
+  limit: number = 10;
+
+  @IsOptional()
+  @IsString()
+  search?: string;
+
+  @IsOptional()
+  @IsIn(TODO_STATUS)
+  status?: TodoStatus;
+
+  @IsOptional()
+  @IsString()
+  tag?: string;
+
+  @IsOptional()
+  @IsString()
+  noteDate?: string;
 }

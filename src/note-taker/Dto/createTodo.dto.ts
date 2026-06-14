@@ -1,17 +1,7 @@
 import { Type } from 'class-transformer';
-import {
-  IsEnum,
-  IsInt,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-} from 'class-validator';
+import { IsIn, IsInt, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
-export enum TodoStatus {
-  NEW = 'NEW',
-  IN_PROGRESS = 'IN_PROGRESS',
-  DONE = 'DONE',
-}
+import { TODO_STATUS, type TodoStatus } from '../enums/todo-status.enum.js';
 
 export class CreateTodoDto {
   @IsString()
@@ -22,7 +12,7 @@ export class CreateTodoDto {
   @IsString()
   tag?: string;
 
-  @IsEnum(TodoStatus)
+  @IsIn(TODO_STATUS)
   status!: TodoStatus;
 
   @Type(() => Number)

@@ -44,11 +44,30 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsI
 }
 
 ###
-GET http://localhost:3000/api/note/getAllTodos/99?page=1&limit=10
+GET http://localhost:3000/api/note/getAllTodos/1?page=1&limit=10
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoibmlra3NzeS5kZXZAZ21haWwuY29tIiwiaWF0IjoxNzgxNDQyNTMxLCJleHAiOjE3ODE1Mjg5MzF9.aF-vkZTKx9Du4u_xsoDfo5r_RAaFFvMmnxQxVEe474c
 
 ###
 GET http://localhost:3000/api/note/getAllNotes?page=1&limit=10
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoibmlra3NzeS5kZXZAZ21haWwuY29tIiwiaWF0IjoxNzgxNDQyNTMxLCJleHAiOjE3ODE1Mjg5MzF9.aF-vkZTKx9Du4u_xsoDfo5r_RAaFFvMmnxQxVEe474c
 
+###
+PATCH http://localhost:3000/api/note/updateNote/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoibmlra3NzeS5kZXZAZ21haWwuY29tIiwiaWF0IjoxNzgxNDQyNTMxLCJleHAiOjE3ODE1Mjg5MzF9.aF-vkZTKx9Du4u_xsoDfo5r_RAaFFvMmnxQxVEe474c
+Content-Type: application/json
 
+{
+  "title": "Updated Meeting Notes",
+  "note_date": "2026-06-15T10:00:00.000Z"
+}
+
+###
+PATCH http://localhost:3000/api/note/updateTodo/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoibmlra3NzeS5kZXZAZ21haWwuY29tIiwiaWF0IjoxNzgxNDQyNTMxLCJleHAiOjE3ODE1Mjg5MzF9.aF-vkZTKx9Du4u_xsoDfo5r_RAaFFvMmnxQxVEe474c
+Content-Type: application/json
+
+{
+  "body": "Complete NestJS Assignment",
+  "tag": "backend",
+  "status": "IN_PROGRESS"
+}

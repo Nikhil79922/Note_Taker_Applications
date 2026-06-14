@@ -5,9 +5,18 @@ import { AuthModule } from './auth/auth.module.js';
 import { NoteTakerModule } from './note-taker/note-taker.module.js';
 import { UserModule } from './user/user.module.js';
 import { ConfigModule } from '@nestjs/config';
+import configuration from './config/configuration.js';
 
 @Module({
-  imports: [ConfigModule.forRoot(), AuthModule, NoteTakerModule, UserModule],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      load: [configuration],
+    }),
+    AuthModule,
+    NoteTakerModule,
+    UserModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

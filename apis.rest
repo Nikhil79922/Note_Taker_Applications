@@ -1,12 +1,31 @@
-GET http://localhost:3000/
+GET http://localhost:3000/ping
 
 
 ###
-POST http://localhost:3000/auth/register
+POST http://localhost:3000/api/auth/register
 Content-Type: application/json
 
 {
     "name":"Heloow",
-    "email":"nikkssy.dev@gmail.com",
+    "email":"nikkssy.dev10@gmail.com",
+    "password":"Gasmonkey@123"
+}
+
+###
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+    "email":"nikkssy.dev4@gmail.com",
+    "password":"Gasmonkey@123"
+}
+
+
+###
+POST http://localhost:3000/api/note
+Content-Type: application/json
+
+{
+    "email":"nikkssy.dev4@gmail.com",
     "password":"Gasmonkey@123"
 }

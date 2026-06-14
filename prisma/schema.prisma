@@ -10,15 +10,61 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 model User {
-  id    Int     @default(autoincrement()) @id
-  email String  @unique
-  name  String
-  password String 
-  updated_at DateTime @updatedAt
+  id       Int    @id @default(autoincrement())
+  name     String
+  email    String @unique
+  password String
+
+  notes Note[]
+
   created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model Note {
+  id    Int    @id @default(autoincrement())
+  title String
+
+  note_date DateTime
+
+  user_id Int
+  user    User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  todos Todo[]
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@index([user_id])
+  @@index([note_date])
+}
+
+enum TodoStatus {
+  NEW
+  IN_PROGRESS
+  DONE
+}
+
+model Todo {
+  id Int @id @default(autoincrement())
+
+  body String
+
+  tag String?
+
+  status TodoStatus @default(NEW)
+
+  note_id Int
+  note    Note @relation(fields: [note_id], references: [id], onDelete: Cascade)
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@index([note_id])
+  @@index([status])
 }

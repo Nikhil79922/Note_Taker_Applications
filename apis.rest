@@ -34,22 +34,22 @@ Authorization:  Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWls
 ###
 POST http://localhost:3000/api/note/createTodo
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoibmlra3NzeS5kZXZAZ21haWwuY29tIiwiaWF0IjoxNzgxNDQyNTMxLCJleHAiOjE3ODE1Mjg5MzF9.aF-vkZTKx9Du4u_xsoDfo5r_RAaFFvMmnxQxVEe474c
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoibmlra3NzeS5kZXZAZ21haWwuY29tIiwiaWF0IjoxNzgxNTQ0NTk2LCJleHAiOjE3ODE2MzA5OTZ9.f1BzucAT7sBqkwULdlfOhB5Wab4O3zxYGV5UfFOQnUU
 
 {
   "body": "Finish NestJS authentication module",
   "tag": "backend",
   "status": "NEW",
-  "note_id": "2"
+  "note_id": "3"
 }
 
 ###
-GET http://localhost:3000/api/note/getAllTodos/1?page=1&limit=10
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoibmlra3NzeS5kZXZAZ21haWwuY29tIiwiaWF0IjoxNzgxNDQyNTMxLCJleHAiOjE3ODE1Mjg5MzF9.aF-vkZTKx9Du4u_xsoDfo5r_RAaFFvMmnxQxVEe474c
+GET http://localhost:3000/api/note/getAllTodos/3?page=1&limit=10
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoibmlra3NzeS5kZXZAZ21haWwuY29tIiwiaWF0IjoxNzgxNTQ0NTk2LCJleHAiOjE3ODE2MzA5OTZ9.f1BzucAT7sBqkwULdlfOhB5Wab4O3zxYGV5UfFOQnUU
 
 ###
 GET http://localhost:3000/api/note/getAllNotes?page=1&limit=10
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoibmlra3NzeS5kZXZAZ21haWwuY29tIiwiaWF0IjoxNzgxNDQyNTMxLCJleHAiOjE3ODE1Mjg5MzF9.aF-vkZTKx9Du4u_xsoDfo5r_RAaFFvMmnxQxVEe474c
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoibmlra3NzeS5kZXZAZ21haWwuY29tIiwiaWF0IjoxNzgxNTQ0NTk2LCJleHAiOjE3ODE2MzA5OTZ9.f1BzucAT7sBqkwULdlfOhB5Wab4O3zxYGV5UfFOQnUU
 
 ###
 PATCH http://localhost:3000/api/note/updateNote/1
@@ -70,4 +70,22 @@ Content-Type: application/json
   "body": "Complete NestJS Assignment",
   "tag": "backend",
   "status": "IN_PROGRESS"
+}
+
+###
+DELETE http://localhost:3000/api/note/deleteTodo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoibmlra3NzeS5kZXZAZ21haWwuY29tIiwiaWF0IjoxNzgxNTQ0NTk2LCJleHAiOjE3ODE2MzA5OTZ9.f1BzucAT7sBqkwULdlfOhB5Wab4O3zxYGV5UfFOQnUU
+Content-Type: application/json
+
+{
+"id":[1,2,3,4,5]
+}
+
+###
+DELETE http://localhost:3000/api/note/deleteNotes
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoibmlra3NzeS5kZXZAZ21haWwuY29tIiwiaWF0IjoxNzgxNTQ0NTk2LCJleHAiOjE3ODE2MzA5OTZ9.f1BzucAT7sBqkwULdlfOhB5Wab4O3zxYGV5UfFOQnUU
+Content-Type: application/json
+
+{
+"id":[1,2]
 }

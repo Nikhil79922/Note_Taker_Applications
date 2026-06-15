@@ -1,15 +1,20 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { CreateNoteDto } from './Dto/createNotes.dto.js';
 import { RequestDto } from './Dto/request.dto.js';
 import { PrismaService } from '../prisma.service.js';
 import { CreateTodoDto } from './Dto/createTodo.dto.js';
-import { GetNoteParamsDto, PaginationDto } from './Dto/getDetails.dto.js';
+import {
+  GetNoteParamsDto,
+  IdsPayloadDto,
+  PaginationDto,
+} from './Dto/getDetails.dto.js';
 import { UpdateNoteDto } from './Dto/update-note.dto.js';
 import { UpdateTodoDto } from './Dto/update-todo.dto.js';
 
 @Injectable()
 export class NoteTakerService {
+  private readonly logger = new Logger(NoteTakerService.name);
   constructor(private readonly prisma: PrismaService) {}
 
   async createNote(payload: CreateNoteDto, userDetails: RequestDto) {
@@ -76,11 +81,26 @@ export class NoteTakerService {
 
     const skip = (page - 1) * limit;
 
-    const where = {
-      note_id: params.id,
-      note: {
+    const note = await this.prisma.note.findFirst({
+      where: {
+        id: params.id,
         user_id: userDetails.sub,
       },
+      select: {
+        id: true,
+        title: true,
+        note_date: true,
+        created_at: true,
+        updated_at: true,
+      },
+    });
+
+    if (!note) {
+      throw new NotFoundException('Note not found');
+    }
+
+    const where = {
+      note_id: params.id,
 
       ...(query.search && {
         OR: [
@@ -123,11 +143,13 @@ export class NoteTakerService {
           status: true,
           note_id: true,
           created_at: true,
+          updated_at: true,
         },
         orderBy: {
           created_at: 'desc',
         },
       }),
+
       this.prisma.todo.count({
         where,
       }),
@@ -137,7 +159,8 @@ export class NoteTakerService {
       message:
         todos.length > 0 ? 'Successfully fetched all todos' : 'No todo found',
       data: {
-        items: todos,
+        note,
+        todos,
         pagination: {
           page,
           limit,
@@ -307,6 +330,50 @@ export class NoteTakerService {
     return {
       message: 'Todo updated successfully',
       data: updatedTodo,
+    };
+  }
+
+  async deleteTodos(payload: IdsPayloadDto, userDetails: RequestDto) {
+    const result = await this.prisma.todo.deleteMany({
+      where: {
+        id: {
+          in: payload.id,
+        },
+        note: {
+          user_id: userDetails.sub,
+        },
+      },
+    });
+    this.logger.debug(`Delete todos result value ${JSON.stringify(result)}`);
+    if (result.count) {
+      return {
+        message: `${result.count} todos deleted successfully`,
+      };
+    }
+    return {
+      message: `${result.count} todos found`,
+    };
+  }
+
+  async deleteNotes(payload: IdsPayloadDto, userDetails: RequestDto) {
+    const result = await this.prisma.note.deleteMany({
+      where: {
+        id: {
+          in: payload.id,
+        },
+        user: {
+          id: userDetails.sub,
+        },
+      },
+    });
+    this.logger.debug(`Delete Notes result value ${JSON.stringify(result)}`);
+    if (result.count) {
+      return {
+        message: `${result.count} notes deleted successfully`,
+      };
+    }
+    return {
+      message: `${result.count} notes found`,
     };
   }
 }

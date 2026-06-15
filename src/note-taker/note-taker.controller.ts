@@ -4,6 +4,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
@@ -16,7 +17,11 @@ import { NoteTakerService } from './note-taker.service.js';
 import type { Request as ExpressRequest } from 'express';
 import { RequestDto } from './Dto/request.dto.js';
 import { CreateTodoDto } from './Dto/createTodo.dto.js';
-import { GetNoteParamsDto, PaginationDto } from './Dto/getDetails.dto.js';
+import {
+  GetNoteParamsDto,
+  IdsPayloadDto,
+  PaginationDto,
+} from './Dto/getDetails.dto.js';
 import { UpdateNoteDto } from './Dto/update-note.dto.js';
 import { UpdateTodoDto } from './Dto/update-todo.dto.js';
 
@@ -70,5 +75,17 @@ export class NoteTakerController {
   ) {
     const userDetails = req['user'] as RequestDto;
     return this.noteService.updateTodo(params.id, payload, userDetails);
+  }
+
+  @Delete('/deleteTodo')
+  deleteTodo(@Body() payload: IdsPayloadDto, @Request() req: ExpressRequest) {
+    const userDetails = req['user'] as RequestDto;
+    return this.noteService.deleteTodos(payload, userDetails);
+  }
+
+  @Delete('/deleteNotes')
+  deleteNotes(@Body() payload: IdsPayloadDto, @Request() req: ExpressRequest) {
+    const userDetails = req['user'] as RequestDto;
+    return this.noteService.deleteNotes(payload, userDetails);
   }
 }

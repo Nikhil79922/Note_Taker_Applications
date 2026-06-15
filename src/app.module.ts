@@ -6,6 +6,8 @@ import { NoteTakerModule } from './note-taker/note-taker.module.js';
 import { UserModule } from './user/user.module.js';
 import { ConfigModule } from '@nestjs/config';
 import configuration from './config/configuration.js';
+import { APP_GUARD } from '@nestjs/core';
+import { AuthGuard } from './auth/auth.guard.js';
 
 @Module({
   imports: [
@@ -18,6 +20,12 @@ import configuration from './config/configuration.js';
     UserModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard,
+    },
+  ],
 })
 export class AppModule {}

@@ -1,5 +1,13 @@
 import { Type } from 'class-transformer';
-import { IsIn, IsInt, IsOptional, IsString, Min } from 'class-validator';
+import {
+  ArrayNotEmpty,
+  IsArray,
+  IsIn,
+  IsInt,
+  IsOptional,
+  IsString,
+  Min,
+} from 'class-validator';
 
 import { TODO_STATUS, type TodoStatus } from '../enums/todo-status.enum.js';
 
@@ -7,6 +15,14 @@ export class GetNoteParamsDto {
   @Type(() => Number)
   @IsInt()
   id!: number;
+}
+
+export class IdsPayloadDto {
+  @IsArray()
+  @ArrayNotEmpty()
+  @Type(() => Number)
+  @IsInt({ each: true })
+  id!: number[];
 }
 
 export class PaginationDto {

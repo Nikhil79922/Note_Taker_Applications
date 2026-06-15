@@ -1,0 +1,347 @@
+GET http://localhost:3000/ping
+
+
+###
+POST http://localhost:3000/api/auth/register
+Content-Type: application/json
+
+{
+    "name":"Nikhil",
+    "email":"nikkssy.dev1@gmail.com",
+    "password":"Gasmonkey@123"
+}
+
+# response :- {
+#   "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImVtYWlsIjoibmlra3NzeS5kZXYxQGdtYWlsLmNvbSIsImlhdCI6MTc4MTU0NjMzNSwiZXhwIjoxNzgxNjMyNzM1fQ.yyAT1RUWekvgOz-dwX0hl-KdXkJgSnQxyRVPZD-k0LU"
+# }
+
+# error res:- 
+# {
+#   "message": "Unexpected non-whitespace character after JSON at position 96 (line 8 column 1)",
+#   "error": "Bad Request",
+#   "statusCode": 400
+# }
+
+###
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+    "email":"nikkssy.dev@gmail.com",
+    "password":"Gasmonkey123"
+}
+
+# res :- {
+#   "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoibmlra3NzeS5kZXZAZ21haWwuY29tIiwiaWF0IjoxNzgxNTQ2Mzc1LCJleHAiOjE3ODE2MzI3NzV9.yZqvJxJC5tIfvgcOm_iTjX-HPV5DdMjjHHCosUg4s1A"
+# }
+
+# error res:- {
+#   "message": [
+#     "password is not strong enough"
+#   ],
+#   "error": "Bad Request",
+#   "statusCode": 400
+# }
+
+###
+POST http://localhost:3000/api/note/createNote
+Content-Type: application/json
+Authorization:  Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoibmlra3NzeS5kZXZAZ21haWwuY29tIiwiaWF0IjoxNzgxNTQ2Mzc1LCJleHAiOjE3ODE2MzI3NzV9.yZqvJxJC5tIfvgcOm_iTjX-HPV5DdMjjHHCosUg4s1A
+
+{
+    "title":"nikkssy.dev@gmail.com"
+}
+
+# res:- {
+#   "message": "Note created SuccessFully",
+#   "data": {
+#     "id": 11,
+#     "title": "nikkssy.dev@gmail.com",
+#     "note_date": "2026-06-15T18:00:43.020Z"
+#   }
+# }
+
+# error res:- {
+#   "message": "Unauthorized",
+#   "statusCode": 401
+# }
+
+
+###
+POST http://localhost:3000/api/note/createTodo
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoibmlra3NzeS5kZXZAZ21haWwuY29tIiwiaWF0IjoxNzgxNTQ0NTk2LCJleHAiOjE3ODE2MzA5OTZ9.f1BzucAT7sBqkwULdlfOhB5Wab4O3zxYGV5UfFOQnUU
+
+{
+  "body": "Finish NestJS authentication module",
+  "tag": "backend",
+  "status": "NEW",
+  "note_id": "11"
+}
+
+# res:-{
+#   "message": "Todo created SuccessFully",
+#   "data": {
+#     "id": 9,
+#     "body": "Finish NestJS authentication module",
+#     "tag": "backend",
+#     "status": "NEW",
+#     "note_id": 3,
+#     "created_at": "2026-06-15T18:00:58.191Z"
+#   }
+# }
+
+###
+GET http://localhost:3000/api/note/getAllTodos/11?page=1&limit=10
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoibmlra3NzeS5kZXZAZ21haWwuY29tIiwiaWF0IjoxNzgxNTQ0NTk2LCJleHAiOjE3ODE2MzA5OTZ9.f1BzucAT7sBqkwULdlfOhB5Wab4O3zxYGV5UfFOQnUU
+
+res:- 
+# {
+#   "message": "Successfully fetched all todos",
+#   "data": {
+#     "note": {
+#       "id": 3,
+#       "title": "nikkssy.dev@gmail.com",
+#       "note_date": "2026-06-14T13:05:17.413Z",
+#       "created_at": "2026-06-14T13:05:17.414Z",
+#       "updated_at": "2026-06-14T13:05:17.414Z"
+#     },
+#     "todos": [
+#       {
+#         "id": 9,
+#         "body": "Finish NestJS authentication module",
+#         "tag": "backend",
+#         "status": "NEW",
+#         "note_id": 3,
+#         "created_at": "2026-06-15T18:00:58.191Z",
+#         "updated_at": "2026-06-15T18:00:58.191Z"
+#       },
+#       {
+#         "id": 8,
+#         "body": "Finish NestJS authentication module",
+#         "tag": "backend",
+#         "status": "NEW",
+#         "note_id": 3,
+#         "created_at": "2026-06-15T17:54:20.393Z",
+#         "updated_at": "2026-06-15T17:54:20.393Z"
+#       }
+#     ],
+#     "pagination": {
+#       "page": 1,
+#       "limit": 10,
+#       "total": 2,
+#       "totalPages": 1,
+#       "hasNextPage": false,
+#       "hasPreviousPage": false
+#     },
+#     "filters": {
+#       "search": null,
+#       "status": null,
+#       "tag": null
+#     }
+#   }
+# }
+
+###
+GET http://localhost:3000/api/note/getAllNotes?page=1&limit=10
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoibmlra3NzeS5kZXZAZ21haWwuY29tIiwiaWF0IjoxNzgxNTQ0NTk2LCJleHAiOjE3ODE2MzA5OTZ9.f1BzucAT7sBqkwULdlfOhB5Wab4O3zxYGV5UfFOQnUU
+
+# res:- {
+#   "message": "Successfully fetched all notes",
+#   "data": {
+#     "items": [
+#       {
+#         "id": 11,
+#         "title": "nikkssy.dev@gmail.com",
+#         "user": {
+#           "name": "Nikhil"
+#         },
+#         "created_at": "2026-06-15T18:00:43.022Z"
+#       },
+#       {
+#         "id": 10,
+#         "title": "nikkssy.dev@gmail.com",
+#         "user": {
+#           "name": "Nikhil"
+#         },
+#         "created_at": "2026-06-14T13:29:14.990Z"
+#       },
+#       {
+#         "id": 9,
+#         "title": "nikkssy.dev@gmail.com",
+#         "user": {
+#           "name": "Nikhil"
+#         },
+#         "created_at": "2026-06-14T13:23:43.820Z"
+#       },
+#       {
+#         "id": 8,
+#         "title": "nikkssy.dev@gmail.com",
+#         "user": {
+#           "name": "Nikhil"
+#         },
+#         "created_at": "2026-06-14T13:13:48.808Z"
+#       },
+#       {
+#         "id": 7,
+#         "title": "nikkssy.dev@gmail.com",
+#         "user": {
+#           "name": "Nikhil"
+#         },
+#         "created_at": "2026-06-14T13:13:05.961Z"
+#       },
+#       {
+#         "id": 6,
+#         "title": "nikkssy.dev@gmail.com",
+#         "user": {
+#           "name": "Nikhil"
+#         },
+#         "created_at": "2026-06-14T13:10:07.006Z"
+#       },
+#       {
+#         "id": 5,
+#         "title": "nikkssy.dev@gmail.com",
+#         "user": {
+#           "name": "Nikhil"
+#         },
+#         "created_at": "2026-06-14T13:10:03.310Z"
+#       },
+#       {
+#         "id": 4,
+#         "title": "nikkssy.dev@gmail.com",
+#         "user": {
+#           "name": "Nikhil"
+#         },
+#         "created_at": "2026-06-14T13:09:57.425Z"
+#       },
+#       {
+#         "id": 3,
+#         "title": "nikkssy.dev@gmail.com",
+#         "user": {
+#           "name": "Nikhil"
+#         },
+#         "created_at": "2026-06-14T13:05:17.414Z"
+#       }
+#     ],
+#     "pagination": {
+#       "page": 1,
+#       "limit": 10,
+#       "total": 9,
+#       "totalPages": 1,
+#       "hasNextPage": false,
+#       "hasPreviousPage": false
+#     },
+#     "filters": {
+#       "search": null
+#     }
+#   }
+# }
+
+###
+PATCH http://localhost:3000/api/note/updateNote/9
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoibmlra3NzeS5kZXZAZ21haWwuY29tIiwiaWF0IjoxNzgxNTQ0NTk2LCJleHAiOjE3ODE2MzA5OTZ9.f1BzucAT7sBqkwULdlfOhB5Wab4O3zxYGV5UfFOQnUU
+Content-Type: application/json
+
+{
+  "title": "Updated Meeting Notes",
+  "note_date": "2026-06-15T10:00:00.000Z"
+}
+
+# res :- {
+#   "message": "Note updated successfully",
+#   "data": {
+#     "id": 9,
+#     "title": "Updated Meeting Notes",
+#     "note_date": "2026-06-15T10:00:00.000Z",
+#     "updated_at": "2026-06-15T18:03:54.244Z"
+#   }
+# }
+
+
+# error res:- {
+#   "message": "Unauthorized",
+#   "statusCode": 401
+# }
+
+# errro res:- {
+#   "message": "Note not found",
+#   "error": "Not Found",
+#   "statusCode": 404
+# }
+
+###
+PATCH http://localhost:3000/api/note/updateTodo/10
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoibmlra3NzeS5kZXZAZ21haWwuY29tIiwiaWF0IjoxNzgxNTQ0NTk2LCJleHAiOjE3ODE2MzA5OTZ9.f1BzucAT7sBqkwULdlfOhB5Wab4O3zxYGV5UfFOQnUU
+Content-Type: application/json
+
+{
+  "body": "Complete NestJS Assignment",
+  "tag": "backend",
+  "status": "IN_PROGRESS"
+}
+
+# res:- {
+#   "message": "Todo updated successfully",
+#   "data": {
+#     "id": 10,
+#     "body": "Complete NestJS Assignment",
+#     "tag": "backend",
+#     "status": "IN_PROGRESS",
+#     "note_id": 11,
+#     "updated_at": "2026-06-15T18:06:56.719Z"
+#   }
+# }
+
+
+# err res:- 
+# {
+#   "message": "Todo not found",
+#   "error": "Not Found",
+#   "statusCode": 404
+# }
+
+###
+DELETE http://localhost:3000/api/note/deleteTodo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoibmlra3NzeS5kZXZAZ21haWwuY29tIiwiaWF0IjoxNzgxNTQ0NTk2LCJleHAiOjE3ODE2MzA5OTZ9.f1BzucAT7sBqkwULdlfOhB5Wab4O3zxYGV5UfFOQnUU
+Content-Type: application/json
+
+{
+"id":[1,2,4]
+}
+
+# res:- 
+# {
+#   "message": "0 todos found"
+# }
+
+# err:- {
+#   "message": [
+#     "id should not be empty",
+#     "id must be an array"
+#   ],
+#   "error": "Bad Request",
+#   "statusCode": 400
+# }
+
+###
+DELETE http://localhost:3000/api/note/deleteNotes
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoibmlra3NzeS5kZXZAZ21haWwuY29tIiwiaWF0IjoxNzgxNTQ0NTk2LCJleHAiOjE3ODE2MzA5OTZ9.f1BzucAT7sBqkwULdlfOhB5Wab4O3zxYGV5UfFOQnUU
+Content-Type: application/json
+
+{
+"id":[1,2]
+}
+
+# res:- 
+# {
+#   "message": "0 notes found"
+# }
+
+# err:- {
+#   "message": [
+#     "id should not be empty",
+#     "id must be an array"
+#   ],
+#   "error": "Bad Request",
+#   "statusCode": 400
+# }
